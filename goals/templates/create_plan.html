@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block 'body' %}
+    <a class="btn btn-light" href="/index" role="button">Back</a>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    <br>
+    <br>
+    <div class="container">
+
+        <form action="{% url 'create_plan' %}" method="post"> {% csrf_token %}
+            <div class="form-group">
+                <p>Give your plan a name:</p>
+                {{form.name}}
+                <br>
+                <br>
+                <p>Provide a detailed explanation of your objectives for this plan:</p>
+                {{form.objective}}
+                <br>
+                <br>
+                <p>When you want to achieve your goal:</p>
+                {{form.max_date}}
+                <strong>Format: YYYYY-MM-DD</strong>
+                <br>
+                <br>
+                <p>How many hours per week will you dedicate to this project?</p>
+                {{form.weekly_hours}}
+                <br>
+                <br>
+                <p>Click here to create your plan and wait for the magic to happen...</p>
+                <input type="submit" class="btn btn-secondary" value="Create plan">
+            </div>
+        </form>
+        
+    </div>
+{% endblock %}
+

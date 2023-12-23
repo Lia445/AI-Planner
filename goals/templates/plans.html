@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block 'body' %}
+	<a class="btn btn-light" href="/index" role="button">Back</a>
+	<br>
+	<br>
+	<div class="container">
+		<h4>Your plans:</h4>
+		<br>
+		<div class="list-group">
+			<ul>
+				{% for plan in plans %}
+					<a type="button" class="list-group-item list-group-item-action" href="/goals/view_plan/{{plan.id}}">{{plan}}</a>
+					<br>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+
+{% endblock %}
