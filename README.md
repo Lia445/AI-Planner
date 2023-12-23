@@ -1,5 +1,5 @@
 # AI-Planner
-This project is a personal planner that uses AI to help the user create plans and manage your personal projects and achieve their goals. Technologies used: Python, Django, Openai API. 
+This project is a personal planner that uses AI to help the user create plans, manage personal projects and achieve their goals. Technologies used: Python, Django, Openai API. 
 
 Link to the video: <https://youtu.be/2KMw0e6QluY>
 
