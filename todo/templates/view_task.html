@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block 'body' %}
+    <a class="btn btn-light" href="/index" role="button">Back</a>
+    <br>
+    <br>
+    <h3>Task:</h3>
+    <table>
+        <tr>
+            <th></th>
+        </tr>
+        <tr>
+            <td>Title: {{task.title}}</td>
+        </tr>
+        <tr>
+            <td>Description: {{task.description}}</td>
+        </tr>
+        <tr>
+            <td>Status: {{task.status}}</td>
+        </tr>
+        <tr>
+            <td>Plan: {{task.plan}}</td>
+        </tr>
+        <tr>
+            <td>Group: {{task.group}}</td>
+        </tr>
+    </table>
+{% endblock %}

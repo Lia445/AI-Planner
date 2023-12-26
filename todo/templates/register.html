@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block 'body' %}
+    <div class="container-sm">
+        <br>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        <br>
+        <h4>Register</h4>
+        <form action="{% url 'register' %}" method="post"> {% csrf_token %}
+            <div class="form-group">
+                <br>
+                <label>Username:</label>
+                <input name="username" type="text" class="form-control">
+                <label>Password:</label>
+                <input name="password1" type="password" class="form-control">
+                <label>Confirm password:</label>
+                <input name="password2" type="password" class="form-control">
+                <br>
+                <input type="submit" class="btn btn-secondary" value="Register">
+            </div>
+        </form>
+    </div> 
+{% endblock %}

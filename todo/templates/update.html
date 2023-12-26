@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block 'body' %}
+    <a class="btn btn-light" href="/index" role="button">Back</a>
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+    <br>
+    <br>
+    <div class="container">
+        <form action="/update/{{task.id}}" method="post"> {% csrf_token %}
+            <div class="form-group">
+                {{form.as_p}}
+                <input type="submit" class="btn btn-secondary" value="Update task">
+            </div>
+        </form>
+    </div>
+{% endblock %}

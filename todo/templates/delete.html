@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block 'body' %}
+    <a class="btn btn-light" href="/index" role="button">Back</a>
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+    <br>
+    <br>
+    
+    <div class="container">
+        <form action="/delete/{{task.id}}" method="post"> {% csrf_token %}
+            <div class="form-group">
+                <h4>Are you sure you want to delete task {{task}}?</h4>
+                <br>
+                <input type="submit" class="btn btn-secondary" value="Delete task">
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,227 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block 'body' %}
+  <body>
+    <br>
+    <div class="container-lg">
+      {% if messages %}
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+      <a class="btn btn-secondary" href="/goals/create_plan" role="button">Create plan</a>
+      <a class="btn btn-secondary" href="/goals/plans" role="button">My plans</a>
+      <a class="btn btn-secondary" href="/create" role="button">Create task</a>
+      <br>
+
+      {% if not all_tasks %}
+        <br>
+        <h2>No tasks created yet</h2>
+      {% endif %}
+
+      <br>
+
+      <div class="col-xl-8 col-md-12 m-b-30">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+              aria-selected="false" style="color: black"><strong>Today</strong></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active show" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+              aria-controls="profile" aria-selected="true" style="color: black"><strong>Next 7 days</strong></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+              aria-controls="contact" aria-selected="false" style="color: black"><strong>All</strong></a>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Plan</th>
+                  <th>Task</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                  <th class="text-right"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for task in today %}
+                <tr>
+                  <td>
+                    <h6 class="m-0">{{task.date}}</h6>
+                  </td>
+                  <td>
+                    <h6 class="m-0">{{task.plan}}</h6>
+                  </td>
+                  <td>
+                    <h6 class="m-0">{{task}}</h6>
+                  </td>
+                  <td>
+                    <form action="/next_status/{{task.id}}" method="post"> {% csrf_token %}
+                      <div class="form-group">
+                        <div class="btn-group" role="group">
+                          <button id="btnGroupDrop1" type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{task.status}}
+                          </button>
+                          <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            {% if task.status == "NOT STARTED" %}
+                              <input type="submit" class="dropdown-item" value="Start">
+                            {% elif task.status == "DOING" %}
+                              <input type="submit" class="dropdown-item" value="Finish">
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </td>
+                  <td>
+                    <h6 class="m-0"></h6>
+                  </td>
+                  <div class="btn-group-vertical">
+                    <td class="text-right">
+                      <a href="/view_task/{{task.id}}" class="btn btn-light">View</a>
+                      <br>
+                      <a href="/update/{{task.id}}" class="btn btn-light">Update</a>
+                      <br>       
+                      <a href="/delete/{{task.id}}" class="btn btn-light">Delete</a>
+                    </td>
+                  </div>
+                </tr>
+                {% endfor %}
+              </tbody>
+                
+            </table>
+          </div>
+          <div class="tab-pane fade active show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Plan</th>
+                  <th>Task</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                  <th class="text-right"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for task in this_week %}
+                <tr>
+                  <td>
+                    <h6 class="m-0">{{task.date}}</h6>
+                  </td>
+                  <td>
+                    <h6 class="m-0">{{task.plan}}</h6>
+                  </td>
+                  <td>
+                    <h6 class="m-0">{{task}}</h6>
+                  </td>
+                  <td>
+                    <form action="/next_status/{{task.id}}" method="post"> {% csrf_token %}
+                      <div class="form-group">
+                        <div class="btn-group" role="group">
+                          <button id="btnGroupDrop1" type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{task.status}}
+                          </button>
+                          <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            {% if task.status == "NOT STARTED" %}
+                              <input type="submit" class="dropdown-item" value="Start">
+                            {% elif task.status == "DOING" %}
+                              <input type="submit" class="dropdown-item" value="Finish">
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </td>
+                  <td>
+                    <h6 class="m-0"></h6>
+                  </td>
+                  <div class="btn-group-vertical">
+                    <td class="text-right">
+                      <a href="/view_task/{{task.id}}" class="btn btn-light">View</a>
+                      <br>
+                      <a href="/update/{{task.id}}" class="btn btn-light">Update</a>  
+                      <br>     
+                      <a href="/delete/{{task.id}}" class="btn btn-light">Delete</a>
+                    </td>
+                  </div>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
+          </div>
+          <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Plan</th>
+                  <th>Task</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                  <th class="text-right"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for task in all_tasks %}
+                <tr>
+                  <td>
+                    <h6 class="m-0">{{task.date}}</h6>
+                  </td>
+                  <td>
+                    <h6 class="m-0">{{task.plan}}</h6>
+                  </td>
+                  <td>
+                    <h6 class="m-0">{{task}}</h6>
+                  </td>
+                  <td>
+                    <form action="/next_status/{{task.id}}" method="post"> {% csrf_token %}
+                      <div class="form-group">
+                        <div class="btn-group" role="group">
+                          <button id="btnGroupDrop1" type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{task.status}}
+                          </button>
+                          <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            {% if task.status == "NOT STARTED" %}
+                              <input type="submit" class="dropdown-item" value="Start">
+                            {% elif task.status == "DOING" %}
+                              <input type="submit" class="dropdown-item" value="Finish">
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </td>
+                  <td>
+                    <h6 class="m-0"></h6>
+                  </td>
+                  <div class="btn-group-vertical">
+                    <td class="text-right">
+                      <a href="/view_task/{{task.id}}" class="btn btn-light">View</a>
+                      <br>
+                      <a href="/update/{{task.id}}" class="btn btn-light">Update</a> 
+                      <br>      
+                      <a href="/delete/{{task.id}}" class="btn btn-light">Delete</a>
+                    </td>
+                  </div>
+                </tr>
+                {% endfor %}
+              </tbody>         
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body> 
+
+{% endblock %}
